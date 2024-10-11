@@ -6,13 +6,38 @@ Version: 1.0
 Author: Nicolas Dominguez
 */
 
+require_once plugin_dir_path(__FILE__) . 'products/create_product.php';
+require_once plugin_dir_path(__FILE__) . 'products/update_product.php';
+require_once plugin_dir_path(__FILE__) . 'products/update_field.php';
+require_once plugin_dir_path(__FILE__) . 'products/hook_order.php';
+
 // Hook to initialize REST API route
 add_action('rest_api_init', function () {
-    register_rest_route('wc/v3', '/update-stock/(?P<id>\d+)', array(
-        'methods' => 'POST',
-        'callback' => 'update_product_stock',
+    
+    // Create product
+    register_rest_route('wc/v3', '/', array(
+        'methods' => 'PUT',
+        'callback' => 'create_product',
 
         // Only users with the manage_woocommerce capability can access
+        'permission_callback' => function () {
+            return current_user_can('manage_woocommerce');
+        }
+    ));
+
+    // Update product
+    register_rest_route('wc/v3', '/(?P<id>\d+)', array(
+        'methods' => 'POST',
+        'callback' => 'update_product',
+        'permission_callback' => function () {
+            return current_user_can('manage_woocommerce');
+        }
+    ));
+
+    // Update field
+    register_rest_route('wc/v3', '/(?P<id>\d+)/(?P<field>\w+)/(?P<value>\w+)', array(
+        'methods' => 'PATCH',
+        'callback' => 'update_field',
         'permission_callback' => function () {
             return current_user_can('manage_woocommerce');
         }
