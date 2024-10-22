@@ -15,7 +15,7 @@ require_once plugin_dir_path(__FILE__) . 'products/hook_order.php';
 add_action('rest_api_init', function () {
     
     // Create product
-    register_rest_route('wc/v3', '/', array(
+    register_rest_route('wc/v3', '/products', array(
         'methods' => 'PUT',
         'callback' => 'create_product',
 
@@ -26,7 +26,7 @@ add_action('rest_api_init', function () {
     ));
 
     // Update product
-    register_rest_route('wc/v3', '/(?P<id>\d+)', array(
+    register_rest_route('wc/v3', '/products/(?P<id>\d+)', array(
         'methods' => 'POST',
         'callback' => 'update_product',
         'permission_callback' => function () {
