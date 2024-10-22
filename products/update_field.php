@@ -1,8 +1,4 @@
 <?php
-/* TODO
-Path: /<product_id>/<field>/<value>
-Description: Con un PATCH debe actualizar solo el campo con el valor enviado 
-*/
 
 // Check if WooCommerce is active
 if (!class_exists('WooCommerce')) {
@@ -104,7 +100,8 @@ add_action('rest_api_init', function () {
 /* USAGE EXAMPLE
 PATCH /wp-json/wc/v3/products/123/price/19.99
 PATCH /wp-json/wc/v3/products/123/stock/50
-PATCH /wp-json/wc/v3/products/123/name/New Product Name
+PATCH /wp-json/wc/v3/products/123/name/New-Product-Name
 PATCH /wp-json/wc/v3/products/123/categories/1,2
 PATCH /wp-json/wc/v3/products/123/brand/2
 */
+// TODO: name key should accept whitespaces
